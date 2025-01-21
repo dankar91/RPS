@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Камень Ножницы Бумага</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/game.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h1>Камень Ножницы Бумага</h1>
+                <div id="connection-status" class="alert alert-info">
+                    Подключение...
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Игрок</h5>
+                        <video id="video_feed" autoplay playsinline class="w-100"></video>
+                        <div id="gesture-debug" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Компьютер</h5>
+                        <div id="ai-choice">
+                            <h3>Ожидание хода...</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <div class="score-board p-3 rounded">
+                    <h3>Счёт</h3>
+                    <p class="mb-0">
+                        Игрок: <span id="player-score">0</span> | 
+                        AI: <span id="ai-score">0</span>
+                    </p>
+                    <div class="stats mt-2">
+                        <p class="mb-0">Статистика:</p>
+                        <p class="mb-0">Всего игр: <span id="total-games">0</span></p>
+                        <p class="mb-0">Победы: <span id="win-rate">0%</span></p>
+                        <p class="mb-0">Ничьи: <span id="tie-rate">0%</span></p>
+                    </div>
+                    <div class="previous-round mt-3">
+                        <p class="mb-0">Предыдущий раунд:</p>
+                        <p class="mb-0">Игрок: <span id="prev-player-move">-</span></p>
+                        <p class="mb-0">Компьютер: <span id="prev-ai-move">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+
+    <!-- Application Scripts -->
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/camera_handler.js') }}"></script>
+</body>
+</html>
