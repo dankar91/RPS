@@ -31,11 +31,12 @@
 
 ## Технологии
 
-- Python (Flask, SocketIO) для бэкенда
-- JavaScript для фронтенда
-- MediaPipe для распознавания жестов
-- WebRTC для работы с камерой
-- Bootstrap для стилизации
+- Python
+- JavaScript
+- MediaPipe
+- WebRTC
+- Flask
+- SocketIO
 
 ## Как играть
 
