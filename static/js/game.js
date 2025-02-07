@@ -8,7 +8,7 @@ class RockPaperScissorsGame {
     }
 
     setupGameElements() {
-        // Get elements and handle potential null values
+        // Получаем элементы и обрабатываем потенциальные нулевые значения
         this.aiScoreElement = document.getElementById('ai-score') || this.createScoreElement('ai-score');
         this.playerScoreElement = document.getElementById('player-score') || this.createScoreElement('player-score');
         this.aiChoiceElement = document.getElementById('ai-choice') || this.createChoiceElement();
@@ -54,7 +54,7 @@ class RockPaperScissorsGame {
         }
         this.gameInProgress = true;
         
-        // Show countdown animation
+        // Показываем анимацию обратного отсчета
         await this.showCountdown();
         this.socket.emit('player_gesture', { gesture });
     }
@@ -88,13 +88,7 @@ class RockPaperScissorsGame {
                 }
                 countElement.textContent = text;
                 container.appendChild(countElement);
-                
-                // Воспроизводим звук через оба бэкенда
-                fetch(`/play_sound/countdown/${count}`);
-                if (window.gameAudio) {
-                    window.gameAudio.playCountdown(count);
-                }
-                
+                              
                 setTimeout(() => {
                     if (countElement.parentNode) {
                         container.removeChild(countElement);
@@ -116,12 +110,12 @@ class RockPaperScissorsGame {
     handleGameResult(data) {
         const { player_gesture, ai_gesture, winner, scores, statistics } = data;
         
-        // Add 3 second pause between rounds
+        // Добавим 3 секунды между раундами
         setTimeout(() => {
             this.gameInProgress = false;
         }, 3000);
         
-        // Update previous round info
+        // Обновим информацию о предыдущем раунде
         const gestureEmoji = {
             rock: '✊',
             paper: '✋',
@@ -130,39 +124,28 @@ class RockPaperScissorsGame {
         document.getElementById('prev-player-move').textContent = gestureEmoji[player_gesture] || '-';
         document.getElementById('prev-ai-move').textContent = gestureEmoji[ai_gesture] || '-';
         
-        // Update scores
+        // Обновим очки
         this.aiScore = scores.ai;
         this.playerScore = scores.player;
         this.updateScoreDisplay();
 
-        // Update statistics
+        // Обновим статистику
         if (statistics) {
             document.getElementById('total-games').textContent = statistics.total_games;
             document.getElementById('win-rate').textContent = statistics.player_win_rate + '%';
             document.getElementById('tie-rate').textContent = statistics.tie_rate + '%';
         }
 
-        // Show AI choice
+        // Показываем выбор AI
         this.showAIChoice(ai_gesture);
 
-        // Show result message
+        // Показываем результат
         this.showResult(winner);
 
-        // Trigger animation
+        // Анимация
         this.playResultAnimation(winner);
 
-        // Play sound through both backends
-        if (winner === 'player') {
-            fetch('/play_sound/win');
-            if (window.gameAudio) window.gameAudio.playWin();
-        } else if (winner === 'ai') {
-            fetch('/play_sound/lose');
-            if (window.gameAudio) window.gameAudio.playLose();
-        } else {
-            fetch('/play_sound/tie');
-            if (window.gameAudio) window.gameAudio.playTie();
-        }
-    }
+       
 
     updateScoreDisplay() {
         this.aiScoreElement.textContent = this.aiScore;
@@ -201,7 +184,7 @@ class RockPaperScissorsGame {
         const playerGestureDebug = document.getElementById('gesture-debug');
         const aiChoice = document.getElementById('ai-choice');
 
-        // Remove any existing animation classes
+        
         playerCard.classList.remove('player-win', 'player-lose');
         aiCard.classList.remove('ai-win', 'ai-lose');
 
@@ -217,7 +200,7 @@ class RockPaperScissorsGame {
             if (aiChoice) aiChoice.classList.add('win-text');
         }
 
-        // Remove animation classes after animation completes
+        
         setTimeout(() => {
             playerCard.classList.remove('player-win', 'player-lose');
             aiCard.classList.remove('ai-win', 'ai-lose');
@@ -235,7 +218,7 @@ class RockPaperScissorsGame {
     }
 }
 
-// Initialize game when document is loaded
+
 document.addEventListener('DOMContentLoaded', () => {
     window.game = new RockPaperScissorsGame();
 });
